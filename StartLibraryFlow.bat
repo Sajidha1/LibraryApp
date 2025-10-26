@@ -10,7 +10,7 @@ echo Starting LibraryFlow...
 echo.
 
 cd /d "%~dp0"
-java -cp "src;lib/*" Main
+java -cp "classes;lib\sqlite-jdbc.jar" Main
 
 echo.
 echo LibraryFlow has closed.

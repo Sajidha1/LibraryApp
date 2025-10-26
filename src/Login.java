@@ -133,6 +133,9 @@ public class Login extends JFrame {
         loginPanel.setLayout(new BoxLayout(loginPanel, BoxLayout.Y_AXIS));
         loginPanel.setBorder(new EmptyBorder(40, 40, 40, 40));
         
+        // Custom Logo Panel
+        JPanel logoPanel = createLogoPanel();
+        
         // Welcome text
         JLabel welcomeLabel = new JLabel("Welcome to LibraryFlow");
         welcomeLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
@@ -160,6 +163,8 @@ public class Login extends JFrame {
         JPanel signupPanel = createSignupPanel();
         
         // Add components to login panel
+        loginPanel.add(logoPanel);
+        loginPanel.add(Box.createRigidArea(new Dimension(0, 20)));
         loginPanel.add(welcomeLabel);
         loginPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         loginPanel.add(descLabel);
@@ -174,6 +179,89 @@ public class Login extends JFrame {
         
         cardPanel.add(loginPanel);
         return cardPanel;
+    }
+    
+    private JPanel createLogoPanel() {
+        JPanel logoPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                
+                int centerX = getWidth() / 2;
+                int centerY = getHeight() / 2;
+                
+                // Draw book stack (3 books)
+                drawBook(g2d, centerX - 25, centerY - 15, 50, 8, PRIMARY_COLOR);
+                drawBook(g2d, centerX - 22, centerY - 7, 50, 8, SECONDARY_COLOR);
+                drawBook(g2d, centerX - 20, centerY + 1, 50, 8, SUCCESS_COLOR);
+                
+                // Draw open book on top
+                drawOpenBook(g2d, centerX, centerY - 25, 40, 20);
+                
+                // Draw decorative elements
+                g2d.setColor(new Color(52, 152, 219, 100));
+                for (int i = 0; i < 5; i++) {
+                    int x = centerX - 30 + (i * 15);
+                    int y = centerY + 20 + (i * 2);
+                    g2d.fillOval(x, y, 3, 3);
+                }
+            }
+            
+            private void drawBook(Graphics2D g2d, int x, int y, int width, int height, Color color) {
+                // Book cover
+                g2d.setColor(color);
+                g2d.fillRoundRect(x, y, width, height, 3, 3);
+                
+                // Book spine
+                g2d.setColor(color.darker());
+                g2d.fillRect(x, y, 4, height);
+                
+                // Book pages
+                g2d.setColor(Color.WHITE);
+                g2d.fillRect(x + width - 3, y + 1, 2, height - 2);
+            }
+            
+            private void drawOpenBook(Graphics2D g2d, int centerX, int centerY, int width, int height) {
+                // Left page
+                g2d.setColor(Color.WHITE);
+                int[] xPoints1 = {centerX - width/2, centerX - 2, centerX - 2, centerX - width/2};
+                int[] yPoints1 = {centerY - height/2, centerY - height/2, centerY + height/2, centerY + height/2};
+                g2d.fillPolygon(xPoints1, yPoints1, 4);
+                g2d.setColor(new Color(189, 195, 199));
+                g2d.drawPolygon(xPoints1, yPoints1, 4);
+                
+                // Right page
+                g2d.setColor(Color.WHITE);
+                int[] xPoints2 = {centerX + 2, centerX + width/2, centerX + width/2, centerX + 2};
+                int[] yPoints2 = {centerY - height/2, centerY - height/2, centerY + height/2, centerY + height/2};
+                g2d.fillPolygon(xPoints2, yPoints2, 4);
+                g2d.setColor(new Color(189, 195, 199));
+                g2d.drawPolygon(xPoints2, yPoints2, 4);
+                
+                // Book binding
+                g2d.setColor(TEXT_COLOR);
+                g2d.setStroke(new BasicStroke(2));
+                g2d.drawLine(centerX - 2, centerY - height/2, centerX + 2, centerY - height/2);
+                g2d.drawLine(centerX - 2, centerY + height/2, centerX + 2, centerY + height/2);
+                
+                // Page lines
+                g2d.setStroke(new BasicStroke(1));
+                g2d.setColor(new Color(189, 195, 199));
+                for (int i = 1; i <= 3; i++) {
+                    int lineY = centerY - height/2 + (i * height/4);
+                    g2d.drawLine(centerX - width/2 + 3, lineY, centerX - 5, lineY);
+                    g2d.drawLine(centerX + 5, lineY, centerX + width/2 - 3, lineY);
+                }
+            }
+        };
+        
+        logoPanel.setOpaque(false);
+        logoPanel.setPreferredSize(new Dimension(100, 80));
+        logoPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        return logoPanel;
     }
     
     private JPanel createInputPanel(String labelText, String placeholder) {
