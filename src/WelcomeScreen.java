@@ -139,17 +139,8 @@ public class WelcomeScreen extends JFrame {
             dispose();
         });
         
-        // Guest/Demo Button
-        JButton demoBtn = createWelcomeButton("🎯 DEMO MODE", "Try without account", new Color(155, 89, 182));
-        demoBtn.addActionListener(e -> {
-            // Skip login and go directly to dashboard
-            new Dashboard().setVisible(true);
-            dispose();
-        });
-        
         buttonsPanel.add(loginBtn);
         buttonsPanel.add(signupBtn);
-        buttonsPanel.add(demoBtn);
         
         centerPanel.add(buttonsPanel);
         
