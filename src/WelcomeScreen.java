@@ -219,7 +219,7 @@ public class WelcomeScreen extends JFrame {
         footerLabel.setForeground(LIGHT_BLUE);
         footerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        JLabel versionLabel = new JLabel("Version 1.0 - Modern Library Management Solution");
+        JLabel versionLabel = new JLabel(" Modern Library Management Solution");
         versionLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         versionLabel.setForeground(LIGHT_BLUE);
         versionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
